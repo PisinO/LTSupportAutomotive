@@ -248,7 +248,13 @@
                 protocol = value;
             }
         }
+        
+#if OBDSim
+        [self didRecognizeProtocol:OBD2VehicleProtocolKWP2000_FAST];
+#else
         [self didRecognizeProtocol:protocol];
+#endif
+        
     }];
 }
 
