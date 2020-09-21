@@ -11,13 +11,14 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString* const LTBTLESerialTransporterDidUpdateSignalStrength;
 
 typedef void(^LTBTLESerialTransporterConnectionBlock)(NSInputStream* _Nullable inputStream, NSOutputStream* _Nullable outputStream);
+typedef void(^LTBTLESerialTransporterBTAuthorizationBlock)(BOOL authorized);
 
 @interface LTBTLESerialTransporter : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property(strong,nonatomic,readonly) NSNumber* signalStrength;
 
 +(instancetype)transporterWithIdentifier:(nullable NSUUID*)identifier serviceUUIDs:(NSArray<CBUUID*>*)serviceUUIDs;
--(void)connectWithBlock:(LTBTLESerialTransporterConnectionBlock)block;
+-(void)connectWithBlock:(LTBTLESerialTransporterConnectionBlock)block authorization:(LTBTLESerialTransporterBTAuthorizationBlock)authorization;
 -(void)disconnect;
 
 -(void)startUpdatingSignalStrengthWithInterval:(NSTimeInterval)interval;

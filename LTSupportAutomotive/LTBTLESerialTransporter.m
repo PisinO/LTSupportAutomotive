@@ -33,6 +33,7 @@ NSString* const LTBTLESerialTransporterDidUpdateSignalStrength = @"LTBTLESerialT
     dispatch_queue_t _dispatchQueue;
     
     LTBTLESerialTransporterConnectionBlock _connectionBlock;
+    LTBTLESerialTransporterBTAuthorizationBlock _authorizationBlock;
     LTBTLEReadCharacteristicStream* _inputStream;
     LTBTLEWriteCharacteristicStream* _outputStream;
     
@@ -74,9 +75,10 @@ NSString* const LTBTLESerialTransporterDidUpdateSignalStrength = @"LTBTLESerialT
 #pragma mark -
 #pragma mark API
 
--(void)connectWithBlock:(LTBTLESerialTransporterConnectionBlock)block
+-(void)connectWithBlock:(LTBTLESerialTransporterConnectionBlock)block authorization:(LTBTLESerialTransporterBTAuthorizationBlock)authorization
 {
     _connectionBlock = block;
+    _authorizationBlock = authorization;
     
     _manager = [[CBCentralManager alloc] initWithDelegate:self queue:_dispatchQueue options:nil];
 }
@@ -131,14 +133,17 @@ NSString* const LTBTLESerialTransporterDidUpdateSignalStrength = @"LTBTLESerialT
 {
     if ( central.state != CBCentralManagerStatePoweredOn )
     {
+        _authorizationBlock(NO);
         return;
     }
+    
     NSArray<CBPeripheral*>* peripherals = [_manager retrieveConnectedPeripheralsWithServices:_serviceUUIDs];
     if ( peripherals.count )
     {
         LOG( @"CONNECTED (already) %@", _adapter );
         if ( _adapter.state == CBPeripheralStateConnected )
         {
+            _authorizationBlock(YES);
             _adapter = peripherals.firstObject;
             _adapter.delegate = self;
             [self peripheral:_adapter didDiscoverServices:nil];
