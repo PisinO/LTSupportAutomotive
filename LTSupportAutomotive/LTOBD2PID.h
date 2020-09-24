@@ -62,12 +62,18 @@ typedef enum : NSUInteger {
 #pragma mark Some abstract classes to simplify
 
 @interface LTOBD2PIDSingleByteTemperature : LTOBD2PID
+
+- (double)doubleResponse;
+
 @end
 
 @interface LTOBD2PIDDoubleByteTemperature : LTOBD2PID
 @end
 
 @interface LTOBD2PIDSingleBytePercent : LTOBD2PID
+
+- (int)integerResponse;
+
 @end
 
 @interface LTOBD2PIDStoredDTC : LTOBD2PID
@@ -217,11 +223,15 @@ typedef enum : NSUInteger {
 
 +(instancetype)pid NS_UNAVAILABLE;
 
+- (double)doubleResponse;
+
 @end
 
 @interface LTOBD2PID_VEHICLE_SPEED_0D : LTOBD2PID
 
 +(instancetype)pid NS_UNAVAILABLE;
+
+- (int)integerResponse;
 
 @end
 

@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(instancetype)command;
 
+- (double)doubleResponse;
+
 @end
 
 @interface LTOBD2CommandELM327_IGNITION_STATUS : LTOBD2Command

@@ -338,6 +338,16 @@
     return response;
 }
 
+- (double)doubleResponse
+{
+    NSString *string = [self formattedResponse];
+    NSMutableCharacterSet *set = [NSMutableCharacterSet whitespaceCharacterSet];
+    [set formUnionWithCharacterSet:[NSCharacterSet letterCharacterSet]];
+    NSString *cleanString = [string stringByTrimmingCharactersInSet:set];
+    
+    return cleanString.doubleValue;
+}
+
 @end
 
 

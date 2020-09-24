@@ -393,6 +393,12 @@
     return [self formatSingleByteDoubleValueWithString:@"%.0f" UTF8_NARROW_NOBREAK_SPACE @"°C" offset:-40 factor:1];
 }
 
+- (double)doubleResponse
+{
+    NSString *string = [self formatSingleByteDoubleValueWithString:@"%.0f" offset:-40 factor:1];
+    return string.doubleValue;
+}
+
 @end
 
 @implementation LTOBD2PIDDoubleByteTemperature
@@ -409,6 +415,12 @@
 -(NSString*)formattedResponse
 {
     return [self formatSingleByteDoubleValueWithString:@"%.1f" UTF8_NARROW_NOBREAK_SPACE @"%%" offset:0 factor:100 / 255.0];
+}
+
+- (int)integerResponse
+{
+    NSString *string = [self formatSingleByteDoubleValueWithString:@"%.1f" offset:0 factor:100 / 255.0];
+    return string.intValue;
 }
 
 @end
@@ -1040,6 +1052,12 @@
     return string;
 }
 
+- (double)doubleResponse
+{
+    NSString* string = [self formatTwoByteDoubleValueWithString:@"%.0f" offset:0 factor:1 / 4.0];
+    return string.doubleValue;
+}
+
 @end
 
 @implementation LTOBD2PID_VEHICLE_SPEED_0D
@@ -1048,6 +1066,12 @@
 {
     NSString* string = [self formatSingleByteDoubleValueWithString:@"%.0f" UTF8_NARROW_NOBREAK_SPACE @"kph" offset:0 factor:1];
     return string;
+}
+
+- (int)integerResponse
+{
+    NSString* string = [self formatSingleByteDoubleValueWithString:@"%.0f" offset:0 factor:1];
+    return string.intValue;
 }
 
 @end
