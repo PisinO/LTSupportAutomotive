@@ -2,6 +2,8 @@
 
 **LTSupportAutomotive** is a library for writing apps that communicate with vehicles using **OBD2** adapters. It also contains auxilliary classes, such as a *VIN decoder*, and a *BTLE characteristic(s) / `NSStream`* serial bridge.
 
+While its primary purpose has been sending and receiving OBD2 PIDs for emission control and diagnostic trouble codes (DTC), I have just begun working on adding support for UDS (unifified diagnostic services), which can then be used for directly talking and reprogramming ECUs. You can follow that work on the [UDS](https://github.com/mickeyl/LTSupportAutomotive/tree/UDS) branch.
+
 Here is an overview of the most important classes:
 
 ### `LTOBD2Adapter` (abstract) ###
@@ -37,6 +39,10 @@ If anyone wants to make this *carthage* aware, feel free to supply a pull reques
 
 You can also include LTSupportAutomotive as an Xcode subproject and link `LTSupportAutomotive.framework` to your executable.
 
+### Swift Package Manager ###
+
+Please see the [SPM](https://github.com/mickeyl/LTSupportAutomotive/tree/SPM) branch.
+
 # Examples #
 
 `LTAutomotiveSupportDemo.xcodeproj` is a (pretty bare-bones) example project.
@@ -50,24 +56,30 @@ Please drop us a note, if you are using this library as well.
 
 # Supported Hardware #
 
-This software should work with most ELM327-compatible hardware (including the behemoth of available *clones*). In general, I recommend the Bluetooth 4.0 devices, since they seems to have a much better quality compared to the WiFi adapters.
-Moreover, they're much more convenient as you don't have to switch the WiFi network. Note that since iOS is lacking public SDK access to *Bluetooth classic* (in particular the Bluetooth `rfcomm` protocol), iOS devices will **not** work with Bluetooth 3.0 adapters.
+This software should work with most ELM327-compatible hardware (including the behemoth of available *clones*). In general, I recommend the Bluetooth 4.0 devices, since they seem to have a much better quality compared to WiFi adapters – and these days they are only minimally more expensive. Moreover, they're much more convenient as you don't have to switch the WiFi network (potentially losing your internet connectivity).
+
+Note that since iOS is lacking public SDK access to *Bluetooth classic* (in particular the Bluetooth `rfcomm` protocol), iOS devices will _generally_ **not** work with Bluetooth 3.0 adapters – notable exceptions being those who take part in the Apple _Manufactured For iPod_ program.
 
 I have tested this library myself with the following adapters (Note that none of these contain a *real* ELM327):
 
-### BTLE (aka BLE, BluetoothSmart, or BT 4.0) ###
+### Apple MFi ###
+* SCANTOOL OBDLINK MX+ (STN2255)
+
+### Bluetooth 4.0 (BLE) ###
 * Carista Bluetooth OBD2
 * FIXD OBD-II Scan Tool (2nd Gen)
+* kungfuren OBD2 Bluetooth 4.0
 * LELink Bluetooth Low Energy
 * VGate iCar Pro BLE4.0 Dual
+* WGSoft.de UniCarScan UCSI-2000
 
 ### WiFi ###
-* NAVISKAUTO WIFI WLAN ELM327
 * EXZA® SUPER Mini WiFi WLAN OBD 2
-* OBDLINK MX (w/ STN11xx)
+* NAVISKAUTO WIFI WLAN ELM327
+* SCANTOOL OBDLINK MX WIFI (STN1153)
 
 ### USB ###
-* OBDLINK SX SCANTOOL
+* SCANTOOL OBDLINK SX (STN1130)
 
 # Enhancements #
 
@@ -83,14 +95,16 @@ While this library can already be used for a lot of things, I'd like to see impr
 
 Please fork and open a pull-request. I'd also like to know about success stories or confirmation for additional compatible hardware (see above) working with this library.
 
-# Thanks #
+# Special Thanks #
 
 * LAWA Solutions GmbH
 * Thomas Dankert
+* BOSCH Service Solutions GmbH
+* TPE Europe GmbH
 
 # License #
 
-Copyright (c) 2016-2019 Dr. Michael 'Mickey' Lauer
+Copyright (c) 2016-2021 Dr. Michael 'Mickey' Lauer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
